@@ -56,18 +56,47 @@ function App() {
 
   const handleCopy = async () => {
     const canvas = canvasRef.current
-    if (!canvas || !text.trim()) return
+    if (!canvas || !text.trim()) return 'fail'
+
+    // 1) Try ClipboardItem with Promise-based blob (Safari-compatible)
+    if (typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write) {
+      try {
+        const item = new ClipboardItem({
+          'image/png': new Promise((resolve) => {
+            canvas.toBlob((blob) => resolve(blob), 'image/png')
+          }),
+        })
+        await navigator.clipboard.write([item])
+        return 'copied'
+      } catch (_) {
+        // fall through to next method
+      }
+    }
+
+    // 2) Mobile fallback: Web Share API (supports sharing image files)
+    if (navigator.share && navigator.canShare) {
+      try {
+        const blob = await new Promise((resolve) =>
+          canvas.toBlob(resolve, 'image/png')
+        )
+        const file = new File([blob], 'qrcode.png', { type: 'image/png' })
+        const shareData = { files: [file] }
+        if (navigator.canShare(shareData)) {
+          await navigator.share(shareData)
+          return 'shared'
+        }
+      } catch (err) {
+        if (err.name === 'AbortError') return 'fail'
+        // fall through
+      }
+    }
+
+    // 3) Last resort: copy data URL as text
     try {
-      const blob = await new Promise((resolve) =>
-        canvas.toBlob(resolve, 'image/png')
-      )
-      await navigator.clipboard.write([
-        new ClipboardItem({ 'image/png': blob }),
-      ])
-      return true
-    } catch (err) {
-      console.error('Copy failed:', err)
-      return false
+      await navigator.clipboard.writeText(canvas.toDataURL('image/png'))
+      return 'copied'
+    } catch (_) {
+      return 'fail'
     }
   }
 

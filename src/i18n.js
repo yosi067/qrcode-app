@@ -14,6 +14,7 @@ const translations = {
     downloadPng: 'Download PNG',
     copyImage: 'Copy Image',
     copied: 'Copied',
+    shared: 'Shared',
   },
   'zh-TW': {
     appName: 'QR Code 產生器',
@@ -30,6 +31,7 @@ const translations = {
     downloadPng: '下載 PNG',
     copyImage: '複製圖片',
     copied: '已複製',
+    shared: '已分享',
   },
   zh: {
     appName: 'QR Code 生成器',
@@ -46,6 +48,7 @@ const translations = {
     downloadPng: '下载 PNG',
     copyImage: '复制图片',
     copied: '已复制',
+    shared: '已分享',
   },
   es: {
     appName: 'Generador de QR Code',
@@ -62,6 +65,7 @@ const translations = {
     downloadPng: 'Descargar PNG',
     copyImage: 'Copiar imagen',
     copied: 'Copiado',
+    shared: 'Compartido',
   },
   ja: {
     appName: 'QR コードジェネレーター',
@@ -78,6 +82,7 @@ const translations = {
     downloadPng: 'PNG ダウンロード',
     copyImage: '画像をコピー',
     copied: 'コピー済み',
+    shared: '共有済み',
   },
   fr: {
     appName: 'Générateur de QR Code',
@@ -94,6 +99,7 @@ const translations = {
     downloadPng: 'Télécharger PNG',
     copyImage: 'Copier l\'image',
     copied: 'Copié',
+    shared: 'Partagé',
   },
 }
 
